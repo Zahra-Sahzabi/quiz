@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:quiz/screens/quiz_screen.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -55,7 +57,7 @@ class Home extends StatelessWidget {
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold),
                       ),
-                      onPressed: null,
+                      onPressed:()=> Get.to(()=>QuizScreen())
                     )
                   ],
                 ),

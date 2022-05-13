@@ -8,8 +8,10 @@ class QuestionControler extends GetxController
     with GetSingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation _animation;
+  Animation get animation => _animation;
 
   late PageController _pageController;
+  PageController get pageController => _pageController;
 
   bool isAnswered = false;
 
@@ -24,22 +26,23 @@ class QuestionControler extends GetxController
   List<Question> _questions = questions
       .map((question) => Question(
           id: question['id'],
-          answer: question['id'],
-          question: question['id'],
-          options: question['id']))
+          answer: question['answer_index'],
+          question: question['question'],
+          options: question['options']))
       .toList();
+  List get questionss => _questions;
 
   @override
   void onInit() {
     super.onInit();
     _animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 10));
-    _animation = Tween(begin: 0, end: 1).animate(_animationController)
+        AnimationController(vsync: this, duration: Duration(seconds: 30));
+    _animation = Tween(begin: 0.0, end: 1.0).animate(_animationController)
       ..addListener(() {
         update();
       });
     _pageController = PageController();
-    _animationController.forward().whenComplete(() => null);
+    _animationController.forward().whenComplete(() => nextQuestion());
   }
 
   @override
@@ -59,7 +62,7 @@ class QuestionControler extends GetxController
     _animationController.stop();
     update();
 
-    Future.delayed(Duration(seconds: 1));
+    Future.delayed(Duration(seconds: 2), () => nextQuestion());
   }
 
   void nextQuestion() {
@@ -70,7 +73,7 @@ class QuestionControler extends GetxController
 
       _animationController.reset();
 
-      _animationController.forward().whenComplete(() => null);
+      _animationController.forward().whenComplete(() => nextQuestion());
     } else {
       Get.to(null);
     }
